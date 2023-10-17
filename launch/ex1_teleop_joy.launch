@@ -1,5 +1,5 @@
 <launch>
-    <param name="~autorepeat_rate" type="double" value="100.0"/>
+    <param name="~autorepeat_rate" type="double" value="10.0"/>
     <node pkg="joy" type="joy_node" name="joy_node" />
-    <node pkg="ex1_joy" type="ex1_joy.py" name="ex1_joy"/>
+    <node pkg="omni_ex1_joy" type="ex1_joy.py" name="ex1_joy"/>
 </launch>
