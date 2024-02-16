@@ -3,6 +3,7 @@
 
 import rospy
 from sensor_msgs.msg import Joy, JointState
+import math
 
 #### Joint settings #####
 DRIVE_JOINT_NAME = ['right_front_wheel_joint', 
@@ -50,8 +51,9 @@ class JoySteeringController:
         self.joy_steer = 0.0
     
     def joy_callback(self, msg):
-        self.joy_driving = msg.axes[DRIVING_INDEX] # vel
-        self.joy_steer = msg.axes[STEERING_INDEX] # steer
+        # hard codeed testing
+        self.joy_driving = 1.0
+        self.joy_steer = 0.3
         self.update_joint_pos(self._joy_to_steering(self.joy_steer))
         self.update_joint_vel(self._joy_to_driving(self.joy_driving))
         self.steer_pub.publish(self.steer_joint_state)
