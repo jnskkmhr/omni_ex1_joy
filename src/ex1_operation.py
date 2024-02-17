@@ -3,7 +3,6 @@
 
 import rospy
 from sensor_msgs.msg import Joy, JointState
-import math
 
 #### Joint settings #####
 DRIVE_JOINT_NAME = ['right_front_wheel_joint', 

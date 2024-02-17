@@ -1,0 +1,6 @@
+<launch>
+    <param name="~autorepeat_rate" type="double" value="10.0"/>
+    <node pkg="joy" type="joy_node" name="joy_node" />
+    <node pkg="omni_ex1_joy" type="joy_to_ackermann.py" name="joy2ack"/>
+    <node pkg="omni_ex1_joy" type="ackermann_steering.py" name="ack2joint"/>
+</launch>
