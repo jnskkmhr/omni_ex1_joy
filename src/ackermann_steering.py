@@ -60,8 +60,8 @@ class AckermannSteeringController:
         Callback function for ackermann_cmd subscriber.
         Args:
             msg (ackermann_msgs/AckermannDriveStamped): Ackermann drive command"""
-        self.update_joint_pos(self.steer_to_steer_ack(msg.steering_angle))
-        self.update_joint_vel(self.vel_to_omega(msg.speed))
+        self.update_joint_pos(self.steer_to_steer_ack(msg.drive.steering_angle))
+        self.update_joint_vel(self.vel_to_omega(msg.drive.speed))
         self.steer_pub.publish(self.steer_joint_state)
         self.drive_pub.publish(self.drive_joint_state)
     
