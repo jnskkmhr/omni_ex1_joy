@@ -20,6 +20,11 @@ Publish `ackermann_steering_cmd` topic \
 Subscribe to `ackermann_steering_cmd` topic \
 Publish `steeering_command` and `drive_command`
 
+`ex1_operation.launch`: \
+Subscribe to `go` topic (std_msgs/Float32) \
+Publish `steeering_command` and `drive_command`. \
+This is for user who does not have joystick.
+
 ## Operation
 
 1. Naiive control (joy inclination is linearly converted to steering angle.)
@@ -30,4 +35,9 @@ roslaunch omni_ex1_joy ex1_teleop_joy.launch
 2. Ackermann steering control
 ```bash
 roslaunch omni_ex1_joy ex1_ackermann_teleop.launch
+```
+
+3. Control without joystick
+```bash
+roslaunch omni_ex1_joy ex1_operation.launch
 ```
