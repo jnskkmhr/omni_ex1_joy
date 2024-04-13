@@ -6,7 +6,8 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import Float32
 
 #### Joint settings #####
-DRIVE_JOINT_NAME = ['right_front_wheel_joint', 
+DRIVE_JOINT_NAME = [
+              'right_front_wheel_joint', 
               'right_rear_wheel_joint',
               'left_front_wheel_joint', 
               'left_rear_wheel_joint',
@@ -36,7 +37,8 @@ class DriveSteeringController:
     We have two nodes: joy to ackermann and ackermann to joint state
     """
     def __init__(self):
-        self.sub = rospy.Subscriber('/go', Float32, self.joy_callback)
+        self.drive_sub = rospy.Subscriber('/drive', Float32, self.drive_callback)
+        self.steer_sub = rospy.Subscriber('/steer', Float32, self.steer_callback)
         self.steer_pub = rospy.Publisher('steering_command', JointState, queue_size=10)
         self.drive_pub = rospy.Publisher('drive_command', JointState, queue_size=10)
         self.steer_joint_state = JointState()
@@ -50,14 +52,15 @@ class DriveSteeringController:
         self.joy_driving = 0.0
         self.joy_steer = 0.0
     
-    def joy_callback(self, msg):
-        # hard codeed testing
-        self.joy_driving = 0.1 * msg.data
-        self.joy_steer = 0.0 * msg.data
-        self.update_joint_pos(self._joy_to_steering(self.joy_steer))
+    def drive_callback(self, msg):
+        self.joy_driving = msg.data
         self.update_joint_vel(self._joy_to_driving(self.joy_driving))
-        self.steer_pub.publish(self.steer_joint_state)
         self.drive_pub.publish(self.drive_joint_state)
+
+    def steer_callback(self, msg):
+        self.joy_steer = msg.data
+        self.update_joint_pos(self._joy_to_steering(self.joy_steer))
+        self.steer_pub.publish(self.steer_joint_state)
     
     def update_joint_pos(self, value):
         for i in range(len(STEER_JOINT_NAME)):
